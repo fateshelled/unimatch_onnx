@@ -78,7 +78,7 @@ if __name__ == "__main__":
         default="data/right.png",
         help="input right image.")
     parser.add_argument(
-        "-",
+        "-o",
         "--output_path",
         type=str,
         default="output.png",
