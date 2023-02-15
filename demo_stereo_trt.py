@@ -1,10 +1,9 @@
 import time
+import cv2
 import numpy as np
 import tensorrt as trt
-import os
-import cv2
-from glob import glob
 import trt_common
+
 
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
 trt.init_libnvinfer_plugins(TRT_LOGGER, "")
@@ -51,7 +50,7 @@ if __name__ == "__main__":
         "-e",
         "--engine_path",
         type=str,
-        default="unimatch_stereo_scale1_1x3x480x640_sim.trt",
+        default="gmstereo-scale1-sceneflow-124a438f_1x3x480x640_sim.trt",
         help="TensorRT engine file path.")
     parser.add_argument(
         "-ih",
