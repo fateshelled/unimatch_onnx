@@ -62,6 +62,7 @@ optional arguments:
 ```
 
 ### TensorRT
+#### Stereo Model
 - Before using the TensorRT demo, you will need to convert the onnx model file to an engine file for your GPU.
 ```bash
 bash convert_onnx2trt.bash <onnx-model-path> <output-engine-path>
