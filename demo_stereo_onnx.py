@@ -4,6 +4,10 @@ import numpy as np
 import onnxruntime as ort
 
 
+IMAGENET_MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
+IMAGENET_STD = np.array([0.229, 0.224, 0.225], dtype=np.float32)
+
+
 available_providers = ort.get_available_providers()
 providers = []
 if "CUDAExecutionProvider" in available_providers:
@@ -29,6 +33,9 @@ def main(model_path: str,
 
     left = cv2.resize(cv2.cvtColor(cv2.imread(left_image), cv2.COLOR_BGR2RGB), (input_width, input_height)).astype(np.float32) / 255.0
     right = cv2.resize(cv2.cvtColor(cv2.imread(right_image), cv2.COLOR_BGR2RGB), (input_width, input_height)).astype(np.float32) / 255.0
+
+    left = (left - IMAGENET_MEAN) / IMAGENET_STD
+    right = (right - IMAGENET_MEAN) / IMAGENET_STD
 
     left = np.transpose(left, (2, 0, 1))[np.newaxis, :, :, :]
     right = np.transpose(right, (2, 0, 1))[np.newaxis, :, :, :]
