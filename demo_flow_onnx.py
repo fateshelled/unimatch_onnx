@@ -14,8 +14,7 @@ providers.append("CPUExecutionProvider")
 
 
 def main(model_path: str,
-         image1: str, image2: str, output_path: str,
-         bidir_flow: bool):
+         image1: str, image2: str, output_path: str,):
 
     print(f"\033[32mReading model from file {model_path}\033[0m")
     sess = ort.InferenceSession(
@@ -27,6 +26,9 @@ def main(model_path: str,
 
     input_height = sess.get_inputs()[0].shape[2]
     input_width = sess.get_inputs()[0].shape[3]
+
+    bidir_flow = sess.get_outputs()[0].shape[0] == 2
+
     # print(f"{input_height=}")
     # print(f"{input_width=}")
     print(f"Input Shape: {sess.get_inputs()[0].shape}")
@@ -99,17 +101,10 @@ if __name__ == "__main__":
         "--output_path",
         type=str,
         default="output.png",
-        help="output colored disparity image paht.")
-    parser.add_argument(
-        "-b",
-        "--bidir_flow",
-        # action="store_false",
-        action="store_true",
-        help="output colored disparity image paht.")
+        help="output colored disparity image path.")
     args = parser.parse_args()
 
     main(
         args.model_path,
         args.image1, args.image2, args.output_path,
-        args.bidir_flow
     )
