@@ -59,6 +59,7 @@ def main(model_path: str,
         forward_flow[:, :, 0] *= org_w / input_width
         forward_flow[:, :, 1] *= org_h / input_height
     drawn = flow_utils.flow_to_image(forward_flow)
+    drawn = cv2.cvtColor(drawn, cv2.COLOR_RGB2BGR)
     cv2.imwrite(output_path, drawn)
     print(f"\033[32moutput: {output_path}\033[0m")
 
@@ -69,6 +70,7 @@ def main(model_path: str,
             backward_flow[:, :, 0] *= org_w / input_width
             backward_flow[:, :, 1] *= org_h / input_height
         drawn = flow_utils.flow_to_image(backward_flow)
+        drawn = cv2.cvtColor(drawn, cv2.COLOR_RGB2BGR)
         file, ext = os.path.splitext(output_path)
         cv2.imwrite(file + "_backward" + ext, drawn)
         print(f"\033[32moutput backward: {output_path}\033[0m")
